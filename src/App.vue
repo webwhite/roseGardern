@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-header></v-header>
+    <v-header :seller="seller"></v-header>
     <div class='tab border-1px'>
       <router-link to='/goods' class='tab-item'>商品</router-link>
       <router-link to='/ratings' class='tab-item'>评论</router-link>
