@@ -13,17 +13,24 @@
           {{seller.description}}/{{seller.deliveryTime}}分钟到达
         </div>
         <div v-if="seller.supports" class="support">
-          <span class="icon"></span>
+          <span class="icon" :class="classMap[seller.supports[0].type]"></span>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
+      <div v-if="seller.supports" class="support-count">
+          <span class="count">{{seller.supports.length}}/个</span>
+          <i class="icon-keyboard_arrow_right"></i>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["seller"]
+  props: ["seller"],
+  created() {
+    this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  }
 };
 </script>
 
@@ -32,8 +39,9 @@ export default {
 .header
   width: 100%;
   color: rgb(255, 255, 255);
-  background-color: #000;
+  background-color: #999;
   .content-wrapper
+    position relative
     padding:24px 12px 18px 24px
     font-size 0
     .avatar
@@ -60,4 +68,47 @@ export default {
         font-size 16px
         line-height 18px
         font-weight bold
+      .description
+        margin-bottom: 10px
+        line-height: 12px
+        font-size: 12px
+      .support
+       .icon
+        display: inline-block
+        width: 16px
+        height: 16px
+        vertical-align: top
+        margin-right: 6px
+        background-size: 16px 16px
+        background-repeat: no-repeat
+        &.decrease
+          bg-image('decrease_2')
+        &.discount
+          bg-image('discount_2')
+        &.guarantee
+          bg-image('guarantee_2')
+        &.invoice
+          bg-image('invoice_2')
+        &.special
+          bg-image('special_2')
+       .text
+        line-height: 16px
+        font-size: 12px
+    .support-count
+     position:absolute
+     right 12px
+     bottom 18px
+     padding 0 8px
+     height 24px
+     line-height 24px
+     border-radius 14px
+     background-color: rgba(0,0,0,0.2)
+     text-align center
+     .count
+      font-size 10px
+      vertical-align top
+     .icon-keyboard_arrow_right
+      line-height 24px
+      margin-left 2px
+      font-size 10px
 </style>
