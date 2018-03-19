@@ -20,8 +20,37 @@
       <div v-if="seller.supports" class="support-count">
           <span class="count">{{seller.supports.length}}/个</span>
           <i class="icon-keyboard_arrow_right"></i>
-        </div>
+      </div>
     </div>
+    <div class="bulletin-wrapper">
+      <span class="bulletin-title"></span>
+      <span class="bulletin-text">{{seller.bulletin}}</span>
+      <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <div class="background">
+      <img :src="seller.avatar" width="100%" height='100%'>
+    </div>
+    <transition name="fade">
+      <div class="detail">
+        <div class="detail-main">
+          <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper"></div>
+          <div class="title">
+            <span class="line"></span><span class="text">优惠信息</span><span class="line"></span>
+          </div>
+          <ul v-if="seller.supports" class="supports">
+            <li v-for="(item,index) in seller.supports">
+              <span class="icon"></span>
+              <span class="text"></span>
+            </li>
+          </ul>
+          <div class="title">
+            <span class="line"></span><span class="text">商家公告</span><span class="line"></span>
+          </div>
+          <div class="bulletin"></div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -37,9 +66,10 @@ export default {
 <style lang='stylus' rel='sheetstyle/stylus'>
 @import '../../common/stylus/mixin.styl';
 .header
+  position relative
   width: 100%;
   color: rgb(255, 255, 255);
-  background-color: #999;
+  background rgba(7,17,27,0.5)
   .content-wrapper
     position relative
     padding:24px 12px 18px 24px
@@ -75,11 +105,11 @@ export default {
       .support
        .icon
         display: inline-block
-        width: 16px
-        height: 16px
+        width: 14px
+        height: 14px
         vertical-align: top
         margin-right: 6px
-        background-size: 16px 16px
+        background-size: 14px 14px
         background-repeat: no-repeat
         &.decrease
           bg-image('decrease_2')
@@ -111,4 +141,75 @@ export default {
       line-height 24px
       margin-left 2px
       font-size 10px
+
+  .bulletin-wrapper
+   position relative
+   height 28px
+   line-height 28px
+   padding-right 22px
+   background-color rgba(7,17,27,0.2)
+   white-space: nowrap
+   overflow: hidden
+   text-overflow: ellipsis
+   .bulletin-title
+    display inline-block
+    vertical-align middle
+    width 22px
+    height 12px
+    margin-left 12px
+    background-size 22px 12px
+    background-repeat no-repeat
+    bg-image('bulletin')
+   .bulletin-text
+    margin 0 4px
+    font-size 10px
+    font-weight 200
+   .icon-keyboard_arrow_right
+    position absolute
+    right 12px
+    top 8px
+
+  .background
+   position absolute
+   top 0
+   left 0
+   z-index -1
+   width 100%
+   height 100%
+   filter blur(10px)
+
+  .detail
+   position fixed
+   top 0
+   left 0
+   z-index 100
+   width 100%
+   height 100%
+   background rgba(7,17,27,0.8)
+   .detail-main
+    margin 64px 0
+    .name
+     line-height 16px
+     text-align center 
+     font-size 16px
+     font-weight 700
+    .star-wrapper
+     margin-top 18px
+     padding 2px 0
+     text-align center
+    .title
+     margin 28px auto 24px auto
+     width:80%
+     display flex
+     .line
+      position relative 
+      flex 1
+      top -6px
+      border-bottom 1px solid rgba(255,255,255,0.2)
+     .text
+      font-size 14px
+      font-weight 700
+      padding 0 12px
+      text-align center
+      
 </style>
