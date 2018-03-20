@@ -1,6 +1,13 @@
 <template>
     <div>
-        i am goods
+        <div class="goods">
+            <div class="menu-wrapper">
+                <ul>
+                    <li class="menu-item"></li>
+                </ul>
+            </div>
+            <div class="foods-wrapper"></div>
+        </div>
     </div>
 </template>
 

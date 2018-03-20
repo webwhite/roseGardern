@@ -17,12 +17,12 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div v-if="seller.supports" class="support-count" @click="showDetail">
           <span class="count">{{seller.supports.length}}/个</span>
           <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showDetail">
       <span class="bulletin-title"></span>
       <span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
@@ -31,11 +31,13 @@
       <img :src="seller.avatar" width="100%" height='100%'>
     </div>
     <transition name="fade">
-      <div class="detail">
+      <div class="detail" v-show="detailShow">
         <div class="detail-wrapper clearfix">
           <div class="detail-main">
             <h1 class="name">{{seller.name}}</h1>
-            <div class="star-wrapper"></div>
+            <div class="star-wrapper">
+              <star :size="48" :score="seller.score"></star>
+            </div>
             <div class="title">
               <span class="line"></span><span class="text">优惠信息</span><span class="line"></span>
             </div>
@@ -51,7 +53,7 @@
             <div class="bulletin"><p class="content">{{seller.bulletin}}</p></div>
           </div>
         </div>
-        <div class="detail-close">
+        <div class="detail-close" @click="hideDetail">
           <i class="icon-close"></i>
         </div>
       </div>
@@ -60,10 +62,31 @@
 </template>
 
 <script>
+import star from '../star/star.vue';
 export default {
-  props: ["seller"],
+  props: {
+    seller: {
+      type: Object
+    }
+  },
+  data() {
+    return {
+      detailShow: ""
+    }
+  },
   created() {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  components: {
+    star
+  },
+  methods: {
+    hideDetail() {
+      this.detailShow = false
+    },
+    showDetail() {
+      this.detailShow = true
+    }
   }
 };
 </script>
@@ -191,6 +214,11 @@ export default {
    width 100%
    height 100%
    background rgba(7,17,27,0.8)
+   &.fade-enter-active, &.fade-leave-active
+    transition: all 0.5s
+   &.fade-enter, &.fade-leave-active
+    opacity: 0
+    background: rgba(7, 17, 27, 0)
    .detail-wrapper
     width:100%
     min-height:100%
